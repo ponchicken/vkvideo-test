@@ -1,0 +1,23 @@
+.VideoPlayer {
+  flex: 1 0 1px;
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.VideoPlayerPanel {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 1px;
+}
+
+.VideoPlayerPanel__controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 16px;
+}
+
+.VideoPlayerPanel__container {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 1px;
+}
