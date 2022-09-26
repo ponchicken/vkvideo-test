@@ -12,7 +12,7 @@ const registerPlayer = () => {
 registerPlayer()
 
 export function Player (props) {
-  const { src, extraVideos } = props
+  const { videoId, src, extraVideos } = props
 
   const playerRef = useRef(null)
   const wasInitedRef = useRef(false)
@@ -27,6 +27,7 @@ export function Player (props) {
         player.initPlayer({
           videos: [
             {
+              videoId,
               sources: {
                 MPEG: {
                   '720p': src
