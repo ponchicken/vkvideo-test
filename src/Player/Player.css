@@ -1,5 +1,6 @@
 .VideoPlayer {
   flex: 1 0 1px;
+  background-color: rgb(26, 35, 76);
 }
 
 .VideoPlayer video {
