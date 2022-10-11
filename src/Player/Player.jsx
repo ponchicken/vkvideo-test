@@ -1,73 +1,51 @@
 import React, { useEffect, useRef } from 'react'
-import { registerPlayerWebComponent } from '@vkontakte/videoplayer'
+import { Player as VKPlayer } from '@vkontakte/videoplayer-core'
 import './Player.css'
 
 /** https://st.mycdn.me/static/vkontakte-videoplayer/latest/doc/index.html */
-const registerPlayer = () => {
-  if (!window.customElements.get('vk-video-player') && !window.customElements.get('google-cast-button')) {
-    registerPlayerWebComponent()
-  }
-}
-
-registerPlayer()
-
 export function Player (props) {
-  const { videoId, src, extraVideos } = props
+  const { src } = props
 
-  const playerRef = useRef(null)
   const wasInitedRef = useRef(false)
 
+  const player = useRef(
+    new VKPlayer({
+      disableChromecast: true
+    })
+  ).current
+  const containerRef = useRef(null)
+
   useEffect(() => {
-    const player = playerRef.current
-    if (player && src && !wasInitedRef.current) {
+    const containerEl = containerRef.current
+    if (player && containerEl && src && !wasInitedRef.current) {
       wasInitedRef.current = true
-      console.log(player)
       console.log('INIT Player', src)
       try {
-        player.initPlayer({
-          videos: [
-            {
-              videoId,
-              sources: {
-                MPEG: {
-                  '720p': src
-                }
-              },
-              duration: 1000,
-              thumbUrl: '',
-              title: 'title',
-              unitedVideoId: 0
+        player.initVideo({
+          container: containerEl,
+          sources: {
+            MPEG: {
+              '1080p': src
             }
-          ],
-
-          autoplay: true,
-          repeat: true,
-          isMobile: true,
-          callbacks: {
-            onEnded () {
-              console.log('ENDED')
-            },
-            onStarted () {
-              console.log('STARTED')
-            }
+          },
+          meta: {
+            title: 'title',
+            subtitle: 'subtitle',
+            videoId: '0'
           }
         })
+
+        player.play()
+        console.log(player)
       } catch (error) {
         console.error('player.initPlayer error', error)
       }
     }
-  }, [playerRef, src, wasInitedRef])
-
-  useEffect(() => {
-    const player = playerRef.current
-    if (player && extraVideos?.length) {
-      player.updateNextVideos(extraVideos)
-    }
-  }, [extraVideos])
+  }, [src, wasInitedRef])
 
   return (
-    <div className="VideoPlayer">
-      <vk-video-player ref={playerRef} />
+    <div className="VideoPlayer" ref={containerRef}>
+      player
     </div>
   )
 }
