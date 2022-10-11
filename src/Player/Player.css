@@ -1,7 +1,10 @@
 .VideoPlayer {
   flex: 1 0 1px;
-  display: grid;
-  grid-template-rows: 1fr;
+}
+
+.VideoPlayer video {
+  width: 500px;
+  height: 500px;
 }
 
 .VideoPlayerPanel {
