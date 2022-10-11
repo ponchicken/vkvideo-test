@@ -6,20 +6,18 @@ import './Player.css'
 export function Player (props) {
   const { src } = props
 
-  const wasInitedRef = useRef(false)
-
   const player = useRef(
     new VKPlayer({
       disableChromecast: true
     })
   ).current
+
   const containerRef = useRef(null)
 
   useEffect(() => {
     const containerEl = containerRef.current
-    if (player && containerEl && src && !wasInitedRef.current) {
-      wasInitedRef.current = true
-      console.log('INIT Player', src)
+
+    if (player && containerEl && src) {
       try {
         player.initVideo({
           container: containerEl,
@@ -36,12 +34,14 @@ export function Player (props) {
         })
 
         player.play()
+
         console.log(player)
+        console.log('INIT Player', src)
       } catch (error) {
         console.error('player.initPlayer error', error)
       }
     }
-  }, [src, wasInitedRef])
+  }, [src])
 
   return (
     <div className="VideoPlayer" ref={containerRef}>
