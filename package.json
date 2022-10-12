@@ -5,7 +5,8 @@
     "start": "cross-env PORT=10888 HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "predeploy": "npm run build",
-    "deploy": "vk-miniapps-deploy"
+    "deploy": "vk-miniapps-deploy",
+    "tunnel": "NODE_TLS_REJECT_UNAUTHORIZED=0 ./node_modules/.bin/vk-tunnel --insecure=1 --http-protocol=https --ws-protocol=wss --host=localhost --port=10888"
   },
   "engines": {
     "node": ">=12.0.0"
@@ -28,6 +29,7 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "@vkontakte/vk-tunnel": "^0.1.2",
     "cross-env": "^7.0.3",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",

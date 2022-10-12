@@ -36,6 +36,9 @@ export function Player (props) {
         player.play()
 
         console.log(player)
+        player.getAllLogs().forEach(console.log)
+        player.events.managedError$.subscribe(e => console.error('MANAGED ERROR', e))
+        player.events.fatalError$.subscribe(e => console.error('FATAL ERROR', e))
         console.log('INIT Player', src)
       } catch (error) {
         console.error('player.initPlayer error', error)
